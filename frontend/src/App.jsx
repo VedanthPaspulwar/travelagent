@@ -9,6 +9,8 @@ import Budget from './pages/Budget';
 import Chat from './pages/Chat';
 import Login from './pages/Login';
 
+const BASENAME = import.meta.env.BASE_URL.replace(/\/+$/, '') || '';
+
 function AppRoutes() {
   const location = useLocation();
   const isLoginPage = location.pathname === '/login';
@@ -39,8 +41,9 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={BASENAME}>
       <AppRoutes />
     </BrowserRouter>
   );
 }
+
