@@ -24,7 +24,9 @@ CREATE TABLE IF NOT EXISTS activities (
     duration_minutes INTEGER NOT NULL DEFAULT 60,
     available INTEGER NOT NULL DEFAULT 1,
     open_time TEXT,
-    close_time TEXT
+    close_time,
+    latitude REAL,
+    longitude REAL
 );
 
 -- Itinerary items linking trips to activities
@@ -58,16 +60,20 @@ CREATE TABLE IF NOT EXISTS events (
 -- Seed: Goa Activities
 -- ============================================
 
-INSERT OR IGNORE INTO activities (id, name, location, category, description, price, duration_minutes, available, open_time, close_time) VALUES
-(1, 'Baga Beach', 'North Goa', 'beaches', 'One of Goa''s most popular beaches with golden sands, water sports, and vibrant shacks lining the shore.', 0, 180, 1, '06:00', '19:00'),
-(2, 'Fort Aguada', 'Sinquerim, North Goa', 'sightseeing', 'A well-preserved 17th-century Portuguese fort offering panoramic views of the Arabian Sea.', 100, 120, 1, '08:00', '17:30'),
-(3, 'Goan Thali Lunch', 'Panjim, Goa', 'food', 'Authentic Goan thali with fish curry, rice, kokum sol kadi, and traditional sides at a heritage restaurant.', 500, 90, 1, '12:00', '15:00'),
-(4, 'Scuba Diving', 'Grande Island, Goa', 'adventure', 'Explore underwater coral reefs and marine life with certified instructors at Grande Island.', 3500, 180, 1, '08:00', '16:00'),
-(5, 'Kayaking', 'Palolem, South Goa', 'adventure', 'Paddle through serene backwaters and mangrove forests on a guided kayaking adventure.', 1500, 120, 1, '07:00', '17:00'),
-(6, 'Sunset Cruise', 'Mandovi River, Panjim', 'leisure', 'Scenic cruise along the Mandovi River with live music, snacks, and a spectacular sunset.', 1200, 120, 1, '16:00', '19:00'),
-(7, 'Chapora Fort', 'Vagator, North Goa', 'sightseeing', 'The iconic "Dil Chahta Hai" fort with breathtaking views of Vagator Beach and the coastline.', 0, 90, 1, '06:00', '18:00'),
-(8, 'Goan Cooking Class', 'Anjuna, North Goa', 'food', 'Hands-on cooking experience learning to prepare traditional Goan dishes with local spices.', 2000, 180, 1, '10:00', '16:00'),
-(9, 'Dudhsagar Falls', 'Mollem, South Goa', 'adventure', 'Visit one of India''s tallest waterfalls via jeep safari through the lush Western Ghats.', 2500, 360, 1, '07:00', '15:00');
+-- Migrate existing databases: add lat/lng columns if missing
+ALTER TABLE activities ADD COLUMN latitude REAL;
+ALTER TABLE activities ADD COLUMN longitude REAL;
+
+INSERT OR IGNORE INTO activities (id, name, location, category, description, price, duration_minutes, available, open_time, close_time, latitude, longitude) VALUES
+(1, 'Baga Beach', 'North Goa', 'beaches', 'One of Goa''s most popular beaches with golden sands, water sports, and vibrant shacks lining the shore.', 0, 180, 1, '06:00', '19:00', 15.5520, 73.7517),
+(2, 'Fort Aguada', 'Sinquerim, North Goa', 'sightseeing', 'A well-preserved 17th-century Portuguese fort offering panoramic views of the Arabian Sea.', 100, 120, 1, '08:00', '17:30', 15.4931, 73.7736),
+(3, 'Goan Thali Lunch', 'Panjim, Goa', 'food', 'Authentic Goan thali with fish curry, rice, kokum sol kadi, and traditional sides at a heritage restaurant.', 500, 90, 1, '12:00', '15:00', 15.4989, 73.8278),
+(4, 'Scuba Diving', 'Grande Island, Goa', 'adventure', 'Explore underwater coral reefs and marine life with certified instructors at Grande Island.', 3500, 180, 1, '08:00', '16:00', 15.3473, 73.8537),
+(5, 'Kayaking', 'Palolem, South Goa', 'adventure', 'Paddle through serene backwaters and mangrove forests on a guided kayaking adventure.', 1500, 120, 1, '07:00', '17:00', 15.0100, 74.0230),
+(6, 'Sunset Cruise', 'Mandovi River, Panjim', 'leisure', 'Scenic cruise along the Mandovi River with live music, snacks, and a spectacular sunset.', 1200, 120, 1, '16:00', '19:00', 15.5044, 73.8312),
+(7, 'Chapora Fort', 'Vagator, North Goa', 'sightseeing', 'The iconic "Dil Chahta Hai" fort with breathtaking views of Vagator Beach and the coastline.', 0, 90, 1, '06:00', '18:00', 15.6100, 73.7411),
+(8, 'Goan Cooking Class', 'Anjuna, North Goa', 'food', 'Hands-on cooking experience learning to prepare traditional Goan dishes with local spices.', 2000, 180, 1, '10:00', '16:00', 15.5739, 73.7422),
+(9, 'Dudhsagar Falls', 'Mollem, South Goa', 'adventure', 'Visit one of India''s tallest waterfalls via jeep safari through the lush Western Ghats.', 2500, 360, 1, '07:00', '15:00', 15.3144, 74.3143);
 
 -- ============================================
 -- Seed: Demo Trip

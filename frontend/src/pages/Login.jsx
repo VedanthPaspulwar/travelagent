@@ -7,34 +7,34 @@ import './Login.css';
 // ── Destination slides ──────────────────────────────────────────────
 const SLIDES = [
   {
-    src: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1920&q=80&auto=format',
-    title: 'Bali, Indonesia',
-    subtitle: 'Island Paradise',
+    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1920&auto=format&fit=crop',
+    title: 'Swiss Alps',
+    subtitle: 'Alpine Grandeur',
   },
   {
-    src: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920&q=80&auto=format',
-    title: 'Paris, France',
-    subtitle: 'City of Lights',
+    src: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?q=80&w=1920&auto=format&fit=crop',
+    title: 'Skógafoss, Iceland',
+    subtitle: 'Waterfall Wonder',
   },
   {
-    src: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1920&q=80&auto=format',
-    title: 'Kyoto, Japan',
-    subtitle: 'Ancient & Modern',
+    src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1920&auto=format&fit=crop',
+    title: 'Grossglockner, Austria',
+    subtitle: 'Alpine Road',
   },
   {
-    src: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1920&q=80&auto=format',
-    title: 'Santorini, Greece',
-    subtitle: 'Aegean Beauty',
+    src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop',
+    title: 'Maldives',
+    subtitle: 'Tropical Paradise',
   },
   {
-    src: 'https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=1920&q=80&auto=format',
-    title: 'Banff, Canada',
-    subtitle: 'Mountain Majesty',
+    src: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1920&auto=format&fit=crop',
+    title: 'Hallstatt Lake',
+    subtitle: 'Lakeside Village',
   },
   {
-    src: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1920&q=80&auto=format',
-    title: 'Amalfi Coast, Italy',
-    subtitle: 'Coastal Wonder',
+    src: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1920&auto=format&fit=crop',
+    title: 'Sahara Dunes',
+    subtitle: 'Desert Majesty',
   },
 ];
 
@@ -194,11 +194,7 @@ export default function Login() {
 
   // ── Render ──────────────────────────────────────────────────────
   return (
-    <div
-      className="login-page"
-      onMouseEnter={pauseSlideshow}
-      onMouseLeave={resumeSlideshow}
-    >
+    <div className="login-page">
       {/* Background Slideshow */}
       <div className="login-slideshow" aria-hidden="true">
         {SLIDES.map((slide, i) => (

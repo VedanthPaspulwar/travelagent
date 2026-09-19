@@ -14,6 +14,8 @@ public class Activity {
     private boolean available;
     private String openTime;
     private String closeTime;
+    private Double latitude;
+    private Double longitude;
 
     public Activity() {}
 
@@ -37,4 +39,8 @@ public class Activity {
     public void setOpenTime(String openTime) { this.openTime = openTime; }
     public String getCloseTime() { return closeTime; }
     public void setCloseTime(String closeTime) { this.closeTime = closeTime; }
+    public Double getLatitude() { return latitude; }
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
+    public Double getLongitude() { return longitude; }
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
 }

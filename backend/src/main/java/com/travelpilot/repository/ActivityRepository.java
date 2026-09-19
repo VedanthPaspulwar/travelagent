@@ -25,6 +25,8 @@ public class ActivityRepository {
         a.setAvailable(rs.getInt("available") == 1);
         a.setOpenTime(rs.getString("open_time"));
         a.setCloseTime(rs.getString("close_time"));
+        a.setLatitude((Double) rs.getObject("latitude"));
+        a.setLongitude((Double) rs.getObject("longitude"));
         return a;
     };
 

@@ -22,6 +22,8 @@ public class ItineraryItem {
     private double activityPrice;
     private int activityDurationMinutes;
     private boolean activityAvailable;
+    private Double activityLatitude;
+    private Double activityLongitude;
 
     public ItineraryItem() {}
 
@@ -57,4 +59,8 @@ public class ItineraryItem {
     public void setActivityDurationMinutes(int activityDurationMinutes) { this.activityDurationMinutes = activityDurationMinutes; }
     public boolean isActivityAvailable() { return activityAvailable; }
     public void setActivityAvailable(boolean activityAvailable) { this.activityAvailable = activityAvailable; }
+    public Double getActivityLatitude() { return activityLatitude; }
+    public void setActivityLatitude(Double activityLatitude) { this.activityLatitude = activityLatitude; }
+    public Double getActivityLongitude() { return activityLongitude; }
+    public void setActivityLongitude(Double activityLongitude) { this.activityLongitude = activityLongitude; }
 }

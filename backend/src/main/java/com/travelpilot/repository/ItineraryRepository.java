@@ -39,6 +39,8 @@ public class ItineraryRepository {
         item.setActivityPrice(rs.getDouble("activity_price"));
         item.setActivityDurationMinutes(rs.getInt("activity_duration_minutes"));
         item.setActivityAvailable(rs.getInt("activity_available") == 1);
+        item.setActivityLatitude((Double) rs.getObject("activity_latitude"));
+        item.setActivityLongitude((Double) rs.getObject("activity_longitude"));
         return item;
     };
 
@@ -47,7 +49,8 @@ public class ItineraryRepository {
         "ii.status, ii.replaced_by, ii.created_at AS ii_created_at, " +
         "a.name AS activity_name, a.location AS activity_location, a.category AS activity_category, " +
         "a.description AS activity_description, a.price AS activity_price, " +
-        "a.duration_minutes AS activity_duration_minutes, a.available AS activity_available " +
+        "a.duration_minutes AS activity_duration_minutes, a.available AS activity_available, " +
+        "a.latitude AS activity_latitude, a.longitude AS activity_longitude " +
         "FROM itinerary_items ii JOIN activities a ON ii.activity_id = a.id ";
 
     public ItineraryRepository(JdbcTemplate jdbc) {

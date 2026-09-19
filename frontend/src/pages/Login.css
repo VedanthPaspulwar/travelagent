@@ -43,6 +43,16 @@
   object-fit: cover;
   display: block;
   filter: saturate(1.15) brightness(0.95);
+  animation: login-kenburns 8s ease-in-out infinite alternate;
+}
+
+@keyframes login-kenburns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
+  }
 }
 
 /* Fallback gradient when image fails */
