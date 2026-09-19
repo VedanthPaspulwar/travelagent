@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation
+} from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import CreateTrip from './pages/CreateTrip';
@@ -21,89 +27,71 @@ function AppRoutes() {
     <>
       {!isLoginPage && <Navbar />}
 
-      <Routes>
-        {/* First page = Login */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
+      <main className={isLoginPage ? '' : 'main-content'}>
+        <Routes>
 
-        {/* Login */}
-        <Route path="/login" element={<Login />} />
+          {/* Default page */}
+          <Route
+            path="/"
+            element={<Navigate to="/login" replace />}
+          />
 
-        {/* Main application */}
-        <Route
-          path="/trip/:id"
-          element={
-            <>
-              <Navbar />
-              <main className="main-content">
-                <Dashboard />
-              </main>
-            </>
-          }
-        />
+          {/* Login */}
+          <Route
+            path="/login"
+            element={<Login />}
+          />
 
-        <Route
-          path="/trip/:id/itinerary"
-          element={
-            <>
-              <Navbar />
-              <main className="main-content">
-                <Itinerary />
-              </main>
-            </>
-          }
-        />
+          {/* Create Trip */}
+          <Route
+            path="/create-trip"
+            element={<CreateTrip />}
+          />
 
-        <Route
-          path="/trip/:id/agent"
-          element={
-            <>
-              <Navbar />
-              <main className="main-content">
-                <AgentActivity />
-              </main>
-            </>
-          }
-        />
+          {/* Trip Dashboard */}
+          <Route
+            path="/trip/:id"
+            element={<Dashboard />}
+          />
 
-        <Route
-          path="/trip/:id/events"
-          element={
-            <>
-              <Navbar />
-              <main className="main-content">
-                <EventLog />
-              </main>
-            </>
-          }
-        />
+          {/* Itinerary */}
+          <Route
+            path="/trip/:id/itinerary"
+            element={<Itinerary />}
+          />
 
-        <Route
-          path="/trip/:id/budget"
-          element={
-            <>
-              <Navbar />
-              <main className="main-content">
-                <Budget />
-              </main>
-            </>
-          }
-        />
+          {/* Agent Activity */}
+          <Route
+            path="/trip/:id/agent"
+            element={<AgentActivity />}
+          />
 
-        <Route
-          path="/trip/:id/chat"
-          element={
-            <>
-              <Navbar />
-              <main className="main-content">
-                <Chat />
-              </main>
-            </>
-          }
-        />
+          {/* Event Log */}
+          <Route
+            path="/trip/:id/events"
+            element={<EventLog />}
+          />
 
-        {/* Unknown URL */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
+          {/* Budget */}
+          <Route
+            path="/trip/:id/budget"
+            element={<Budget />}
+          />
+
+          {/* Chat */}
+          <Route
+            path="/trip/:id/chat"
+            element={<Chat />}
+          />
+
+          {/* Unknown URL → Login */}
+          <Route
+            path="*"
+            element={<Navigate to="/login" replace />}
+          />
+
+        </Routes>
+      </main>
     </>
   );
 }

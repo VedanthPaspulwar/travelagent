@@ -54,7 +54,7 @@ function generateParticles() {
   }));
 }
 
-// ── Google SVG icon (inline to avoid external dependency) ───────────
+// ── Google SVG icon ────────────────────────────────────────────────
 function GoogleIcon() {
   return (
     <svg className="login-google-icon" viewBox="0 0 24 24">
@@ -107,14 +107,17 @@ export default function Login() {
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     setReducedMotion(mq.matches);
+
     const handler = (e) => setReducedMotion(e.matches);
     mq.addEventListener('change', handler);
+
     return () => mq.removeEventListener('change', handler);
   }, []);
 
   // ── Slideshow timer ─────────────────────────────────────────────
   const startSlideshow = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
+
     intervalRef.current = setInterval(() => {
       if (!pausedRef.current) {
         setActiveSlide((prev) => (prev + 1) % SLIDES.length);
@@ -124,37 +127,60 @@ export default function Login() {
 
   useEffect(() => {
     startSlideshow();
+
     return () => clearInterval(intervalRef.current);
   }, [startSlideshow]);
 
   const goToSlide = (index) => {
     setActiveSlide(index);
-    startSlideshow(); // reset timer on manual navigation
+    startSlideshow();
   };
 
-  const pauseSlideshow = () => { pausedRef.current = true; };
-  const resumeSlideshow = () => { pausedRef.current = false; };
+  const pauseSlideshow = () => {
+    pausedRef.current = true;
+  };
+
+  const resumeSlideshow = () => {
+    pausedRef.current = false;
+  };
 
   // ── Validation ──────────────────────────────────────────────────
   const validateEmail = (value) => {
     if (!value.trim()) return 'Email is required';
-    // Standard email pattern
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Enter a valid email';
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      return 'Enter a valid email';
+    }
+
     return '';
   };
 
   const validatePassword = (value) => {
     if (!value) return 'Password is required';
-    if (value.length < 6) return 'Password must be at least 6 characters';
+
+    if (value.length < 6) {
+      return 'Password must be at least 6 characters';
+    }
+
     return '';
   };
 
   const handleBlur = (field) => {
-    setTouched((prev) => ({ ...prev, [field]: true }));
+    setTouched((prev) => ({
+      ...prev,
+      [field]: true
+    }));
+
     if (field === 'email') {
-      setErrors((prev) => ({ ...prev, email: validateEmail(email) }));
+      setErrors((prev) => ({
+        ...prev,
+        email: validateEmail(email)
+      }));
     } else {
-      setErrors((prev) => ({ ...prev, password: validatePassword(password) }));
+      setErrors((prev) => ({
+        ...prev,
+        password: validatePassword(password)
+      }));
     }
   };
 
@@ -164,22 +190,30 @@ export default function Login() {
 
     const emailErr = validateEmail(email);
     const passErr = validatePassword(password);
-    setErrors({ email: emailErr, password: passErr });
-    setTouched({ email: true, password: true });
+
+    setErrors({
+      email: emailErr,
+      password: passErr
+    });
+
+    setTouched({
+      email: true,
+      password: true
+    });
 
     if (emailErr || passErr) return;
 
     setIsLoading(true);
 
-    // Simulated auth delay (replace with real API call later)
+    // Simulated auth delay
     await new Promise((r) => setTimeout(r, 2000));
 
     setIsLoading(false);
     setIsSuccess(true);
 
-    // Navigate to the existing app after showing success
+    // Go to Create Trip after success
     setTimeout(() => {
-      navigate('/');
+      navigate('/create-trip');
     }, 2200);
   };
 
@@ -194,11 +228,18 @@ export default function Login() {
 
   // ── Render ──────────────────────────────────────────────────────
   return (
-    <div className="login-page">
+    <div
+      className="login-page"
+      onMouseEnter={pauseSlideshow}
+      onMouseLeave={resumeSlideshow}
+    >
       {/* Background Slideshow */}
       <div className="login-slideshow" aria-hidden="true">
         {SLIDES.map((slide, i) => (
-          <div key={i} className={`login-slide ${i === activeSlide ? 'active' : ''}`}>
+          <div
+            key={i}
+            className={`login-slide ${i === activeSlide ? 'active' : ''}`}
+          >
             {imgErrors.has(i) ? (
               <div className="login-slide-fallback" />
             ) : (
@@ -239,8 +280,13 @@ export default function Login() {
 
       {/* Destination caption */}
       <div className="login-caption">
-        <div className="login-caption-title">{SLIDES[activeSlide].title}</div>
-        <div className="login-caption-sub">{SLIDES[activeSlide].subtitle}</div>
+        <div className="login-caption-title">
+          {SLIDES[activeSlide].title}
+        </div>
+
+        <div className="login-caption-sub">
+          {SLIDES[activeSlide].subtitle}
+        </div>
       </div>
 
       {/* Slideshow dots */}
@@ -263,12 +309,16 @@ export default function Login() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <div className="login-card">
+
             {/* Logo */}
             <div className="login-logo">
               <div className="login-logo-icon">
                 <Compass size={22} />
               </div>
-              <span className="login-logo-text">TravelPilot</span>
+
+              <span className="login-logo-text">
+                TravelPilot
+              </span>
             </div>
 
             {/* Header */}
@@ -278,7 +328,11 @@ export default function Login() {
             </div>
 
             {/* Form */}
-            <form className="login-form" onSubmit={handleSubmit} noValidate>
+            <form
+              className="login-form"
+              onSubmit={handleSubmit}
+              noValidate
+            >
               {/* Email */}
               <div className="login-input-group">
                 <input
@@ -288,16 +342,25 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onBlur={() => handleBlur('email')}
-                  className={touched.email && errors.email ? 'error' : ''}
+                  className={
+                    touched.email && errors.email ? 'error' : ''
+                  }
                   autoComplete="email"
                   aria-label="Email address"
                 />
+
                 <div className="login-input-icon">
                   <Mail size={18} />
                 </div>
-                <span className="login-floating-label">Email address</span>
+
+                <span className="login-floating-label">
+                  Email address
+                </span>
+
                 {touched.email && errors.email && (
-                  <div className="login-error-text">{errors.email}</div>
+                  <div className="login-error-text">
+                    {errors.email}
+                  </div>
                 )}
               </div>
 
@@ -310,24 +373,40 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onBlur={() => handleBlur('password')}
-                  className={touched.password && errors.password ? 'error' : ''}
+                  className={
+                    touched.password && errors.password ? 'error' : ''
+                  }
                   autoComplete="current-password"
                   aria-label="Password"
                 />
+
                 <div className="login-input-icon">
                   <Lock size={18} />
                 </div>
-                <span className="login-floating-label">Password</span>
+
+                <span className="login-floating-label">
+                  Password
+                </span>
+
                 <button
                   type="button"
                   className="login-password-toggle"
                   onClick={() => setShowPassword((v) => !v)}
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  aria-label={
+                    showPassword ? 'Hide password' : 'Show password'
+                  }
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showPassword ? (
+                    <EyeOff size={18} />
+                  ) : (
+                    <Eye size={18} />
+                  )}
                 </button>
+
                 {touched.password && errors.password && (
-                  <div className="login-error-text">{errors.password}</div>
+                  <div className="login-error-text">
+                    {errors.password}
+                  </div>
                 )}
               </div>
 
@@ -341,7 +420,11 @@ export default function Login() {
                   />
                   Remember me
                 </label>
-                <button type="button" className="login-forgot">
+
+                <button
+                  type="button"
+                  className="login-forgot"
+                >
                   Forgot password?
                 </button>
               </div>
@@ -354,7 +437,13 @@ export default function Login() {
               >
                 {isLoading ? (
                   <>
-                    <Loader2 size={20} style={{ animation: 'spin 1s linear infinite' }} />
+                    <Loader2
+                      size={20}
+                      style={{
+                        animation: 'spin 1s linear infinite'
+                      }}
+                    />
+
                     <span>Preparing your journey...</span>
                   </>
                 ) : (
@@ -372,11 +461,18 @@ export default function Login() {
 
               {/* Social buttons */}
               <div className="login-socials">
-                <button type="button" className="login-social-btn">
+                <button
+                  type="button"
+                  className="login-social-btn"
+                >
                   <GoogleIcon />
                   Google
                 </button>
-                <button type="button" className="login-social-btn">
+
+                <button
+                  type="button"
+                  className="login-social-btn"
+                >
                   <FacebookIcon />
                   Facebook
                 </button>
@@ -385,7 +481,11 @@ export default function Login() {
               {/* Sign up */}
               <div className="login-signup">
                 Don&apos;t have an account?{' '}
-                <a href="#" onClick={(e) => e.preventDefault()}>
+
+                <a
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
+                >
                   Sign up
                 </a>
               </div>
@@ -406,25 +506,36 @@ export default function Login() {
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.15 }}
+              transition={{
+                type: 'spring',
+                stiffness: 200,
+                damping: 15,
+                delay: 0.15
+              }}
             >
               <div className="login-success-check">
                 <Check size={40} strokeWidth={3} />
               </div>
             </motion.div>
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <div className="login-success-title">Bon Voyage!</div>
+              <div className="login-success-title">
+                Bon Voyage!
+              </div>
             </motion.div>
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
             >
-              <div className="login-success-sub">Redirecting to your dashboard...</div>
+              <div className="login-success-sub">
+                Redirecting to your dashboard...
+              </div>
             </motion.div>
           </motion.div>
         )}
